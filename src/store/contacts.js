@@ -7,6 +7,13 @@
  */
 const contacts=[
     {
+        "id":"id_Banshi",
+        "initial":'B',
+        "headerUrl":"https://www.ludicade.com/img/cms/logo-mesure-2.jpg",
+        "name":"办事指南",
+
+    },
+    {
     "id":"id_LiChun",
     "initial":'X',
     "headerUrl":"https://pic.qqtn.com/up/2017-8/2017081811060478140.png",
