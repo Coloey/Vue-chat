@@ -6,6 +6,7 @@ import actions from "./actions"
 import departments from "./departments"
 export default createStore({
     state:{
+        logining:true,
         newMsgCount:0,//新消息数量
         allContacts:contact.contacts,//所有联系人
         allDepartments:departments,

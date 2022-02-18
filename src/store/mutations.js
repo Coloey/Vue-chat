@@ -21,4 +21,7 @@ export default{
     minusNewMsg(state,id){
         state.newMsgCount<1?state.newMsgCount=0:state.newMsgCount-=state.msgList.baseMsg[id].newMsgCount
     },
+    loginSuccess(state){
+        state.logining=false
+    }
 }

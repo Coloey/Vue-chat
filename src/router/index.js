@@ -1,21 +1,17 @@
 import {createRouter,createWebHashHistory} from "vue-router"
-//import chat from "../components/chat/chat.vue"
-//import dialogue from "../components/chat/dialogue.vue"
-//import dialogueDetail from "../components/chat/dialogue-detail.vue"
-//import contact from "../components/contact/contact.vue"
-/*import details from "../components/contact/details.vue"
-import contactDialogue from"../components/contact/contact-dialogue.vue"
-import department from "../components/contact/department.vue"
-import self from "../components/self/self.vue"
-import setting from "../components/self/setting.vue"*/
-//import mobileDetails from "../components/contact/mobile-contacts.vue"
 export default createRouter({
     history:createWebHashHistory(),
     routes:[{
-        path: '/',
+        path:'/',
+        name:"信息",
+        component:()=>Promise.resolve(import("../components/chat/chat.vue"))
+
+    },
+        /*{
+        path: '/chat',
         name: "信息",
         component: ()=>Promise.resolve(import("../components/chat/chat.vue"))
-    }, {
+    },*/ {
         path: '/chat/dialogue/',
         name: "",
         components: {
@@ -59,7 +55,7 @@ export default createRouter({
     },
     {
         path:'/self',
-        name:'',
+        name:'我',
         component:()=>Promise.resolve(import("../components/self/self.vue")),
     },
     {
