@@ -17,7 +17,7 @@
               v-model="userForm.account"
               ref="account"
             />
-            <p v-show="!$store.state.logining" ref="user">!用户名错误</p>
+            <p style="display:none" ref="user">!用户名错误</p>
           </div>
         </el-form-item>
 
@@ -45,7 +45,7 @@
               alt=""
               @click="show()"
             />
-            <p v-show="!$store.state.logining" ref="pwd">!密码错误</p>
+            <p style="display:none" ref="pwd">!密码错误</p>
           </div>
         </el-form-item>
 
@@ -86,6 +86,9 @@ export default {
   },
   methods: {
     handleLogin() {
+       this.$refs.user.style.display="none"
+       this.$refs.pwd.style.display="none"
+
         if (this.userForm.account === "admin" &&this.userForm.password === "123456") {
             setTimeout(()=>{
                  this.$router.push({path:'/'});
@@ -94,14 +97,15 @@ export default {
             },2000)
         }  
         else{ 
+            
             if(this.userForm.account!='admin'){
-                this.$refs.account.style.borderColor="red"
                 this.$refs.user.style.color="red"
+                this.$refs.user.style.display="block"
 
             }
             if(this.userForm.password!="123456"){
-                this.$refs.password.style.borderColor="red"
                 this.$refs.pwd.style.color="red"
+                this.$refs.pwd.style.display="block"
             } 
         }
     },
