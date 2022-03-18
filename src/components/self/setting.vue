@@ -31,7 +31,7 @@
                 @cancel="cancelEvent"
              >
                 <template #reference>
-                <el-button class="weui-btn weui-btn_default" style="width: 50%; background:#46cdcf">退出登录</el-button>
+                <el-button class="weui-btn weui-btn_default" style="width: 50%; left: 50%;transform: translateX(-50%);background:#26c6da">退出登录</el-button>
                 </template>
              </el-popconfirm>
              
@@ -94,6 +94,9 @@ export default {
                 color: #fff;
                 border-style: none;
                 margin: 5px;
+                span {
+                    color: #fff;
+                }
             }
         }
 
