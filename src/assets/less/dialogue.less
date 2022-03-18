@@ -1,48 +1,90 @@
 .dialogue-section {
     // margin-top: 45px;
+    list-style: none;
+    //margin-top: 60px;
+    margin-bottom: 10px;
     height: 100%;
     background: #fff;
     background-size: 100%;
-    padding: 2%;
+    padding: 0 0 50px 0;
 
-    .row {
-        width: 80%;
-        margin-top: 30px;
-        margin-bottom: -10px;
+    li {
+         margin-top: 30px;
+         margin-bottom: -10px;
+        padding: 0.5rem;
+        overflow: hidden;
+        display: flex;
 
         .header {
             width: 35px;
-            float: left;
-            display: block;
-        }
-
-        .text {
-            float: left;
-            /* line-height: 40px; */
-            background: #bbdefb;
-            /* display: block; */
-            padding: 8px;
-            box-sizing: border-box;
-            /* height: 40px; */
-            margin-left: 10px;
+            height: 35px;
             position: relative;
-            border-radius: 4px;
-            max-width: 80%;
-            font-size: 14px;
-
-            &:before {
-                width: 0;
-                height: 0;
-                position: absolute;
-                left: -12px;
-                top: 11px;
-                content: "";
-                border: 6px solid transparent;
-                border-right-color: #fff;
+            display: block;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            -ms-border-radius: 100%;
+            img {
+                width: 35px;
+                height: 35px;
+                border-radius: 100%;
+            }
+            
+        }
+        .text {
+            background: white;
+            min-width: 50px;
+            padding: 10px;
+            border-radius: 2px;
+            box-shadow: 0px 2px 0px rgba(0,0,0,0,007);
+            p {
+                font-size: 14px;
+                margin: 0 0 0.2rem 0;
+                color: #777;
             }
         }
+        
     }
+    .other {
+        .text {
+            border-top-left-radius: 0px;
+            box-shadow: -1px 2px 0px #d4d4d4;
 
+        }
+        &:before {
+            right: 0px;
+            left: 40px;
+            width: 0px;
+            height: 0px;
+            border: 5px solid #fff;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+        }
+    }
+    .self {
+        justify-content: flex-end;
+        align-items: flex-end;
+        .text {
+            order: 1;
+            border-bottom-right-radius: 0px;
+            box-shadow: 1px 2px 0px #d4d4d4;
+        }
+        .header {
+            order:2;
+            &:after {
+                bottom: 19px;
+                right: 0px;
+                width: 0px;
+                height: 0px;
+                border: 5px solid #fff;
+                border-right-color: transparent;
+                border-top-color: transparent;
+                box-shadow: 0px 2px 0px #D4D4D4;
+            }
+        }
+            
+    }
+    
+    
     .msg-more {
         position: absolute;
         display: none;
@@ -278,9 +320,23 @@
     position: relative;
 }
 
-.component-dialogue-bar-public li .iconfont {
-    font-size: 12px;
-}
+.component-dialogue-bar-public {
+    li {
+        .iconfont {
+            font-size: 12px;
+        }
+        .send {
+            font-size: 15px;
+            background: #aa96da;
+            padding: 0px 5px;
+            border-radius: 12px;
+            color: #fff;
+        }
+
+    }
+
+} 
+
 
 .component-dialogue-bar-public li:not(:last-child)::before {
     content: "";

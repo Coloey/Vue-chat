@@ -21,18 +21,86 @@
         </div>
         <div>
              <a href="javascript:;" class="weui-btn weui-btn_default" style="width: 50%; margin-top:50px"> 切换账号</a>
-            <a href="javascript:;" class="weui-btn" style="width: 50%; background-color:#1976d2;margin-top:20px"> 退出登录</a>
+              <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定退出登录吗？"
+                @confirm="confirmEvent"
+                @cancel="cancelEvent"
+             >
+                <template #reference>
+                <el-button class="weui-btn weui-btn_default" style="width: 50%; background:#46cdcf">退出登录</el-button>
+                </template>
+             </el-popconfirm>
+             
         </div>
     </section>
 </div>
 </template>
 
 <script>
+import { InfoFilled } from '@element-plus/icons-vue'
+import {useStore} from "vuex"
 export default {
-    name:"setting",
+  setup(){
+      const store=useStore();
+      const confirmEvent=()=>{
+            store.state.logining=true
+      }
+      return {
+          confirmEvent
+      }
+
+  }
+    
+
 }
+
+ 
 </script>
 
-<style>
+<style lang="less">
+.el-popper {
+    background: #fff;
+    border-radius: 20px;
+    .el-popconfirm {
+        padding: 10px 30px;
+        .el-popconfirm__main {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           font-size:20px;
+            .el-icon {
+                    svg {
+                        width: 25px;
+                        margin: 3px;
+                    }
+
+                
+                
+            }
+        }
+        .el-popconfirm__action {
+            .el-button {
+                width: 90px;
+                height: 30px;
+                font-size: 20px;
+                padding: 5px;
+                text-align: center;
+                border-radius: 5px;
+                background: #2196f3;
+                color: #fff;
+                border-style: none;
+                margin: 5px;
+            }
+        }
+
+    }
+
+}
+ 
+
 
 </style>

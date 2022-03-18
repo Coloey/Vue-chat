@@ -89,7 +89,7 @@ export default {
        this.$refs.user.style.display="none"
        this.$refs.pwd.style.display="none"
 
-        if (this.userForm.account === "admin" &&this.userForm.password === "123456") {
+        if (this.userForm.account == this.$store.state.userInfo.name &&this.userForm.password == this.$store.state.userInfo.password) {
             setTimeout(()=>{
                  this.$router.push({path:'/'});
                  this.$store.state.logining=false;
@@ -97,13 +97,16 @@ export default {
             },2000)
         }  
         else{ 
-            
-            if(this.userForm.account!='admin'){
+          console.log(this.userForm.account===this.$store.state.userInfo.name)
+            console.log(this.userForm.password)
+            console.log(this.$store.state.userInfo.password)
+            console.log(this.userForm.password==this.$store.state.userInfo.password)
+            if(this.userForm.account!==this.$store.state.userInfo.name){
                 this.$refs.user.style.color="red"
                 this.$refs.user.style.display="block"
 
             }
-            if(this.userForm.password!="123456"){
+            if(this.userForm.password!=this.$store.state.userInfo.password){
                 this.$refs.pwd.style.color="red"
                 this.$refs.pwd.style.display="block"
             } 

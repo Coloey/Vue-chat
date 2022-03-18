@@ -58,12 +58,13 @@ const contact={
             return;
         }
         else{
-            for(let index in contacts){
+            return contacts.find(v=>v.id===id)
+           /* for(let index in contacts){
                 if(contacts[index].id==id){
                    // console.log(contacts[index])
                     return contacts[index]
                 }
-            }
+            }*/
         }
     }
 }

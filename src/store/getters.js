@@ -1,5 +1,3 @@
-
-
 export default {
     //将联系人首字母提取出来
     contactsInitialList(state){
@@ -53,5 +51,6 @@ export default {
         }
         //console.log(departmentsList)
         return departmentsList
-    }
+    },
+   
 }

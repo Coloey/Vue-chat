@@ -16,15 +16,23 @@
         <span>{{ pageName }}</span>
       </div>
     </header>
-    <section class="dialogue-section clearfix">
-      <div
-        class="row clearfix"
+    <div class="dialogue-section clearfix">
+      <li class="other clearfix"
         v-for="(item, index) in msgInfo.msg"
         :key="index"
       >
-        <img :src="item.headerUrl" class="header" />
+        <div class="header"><img :src="item.headerUrl"/></div>
         <p class="text" v-more>{{ item.text }}</p>
-      </div>
+      </li>
+       <li 
+        class="self clearfix"
+        v-for="(item, index) in msgArr"
+        :key="index"
+        v-show="item.toUser==$route.query.id"
+      >
+        <p class="text"  v-more>{{ item.text }}</p>
+        <div class="header"><img :src="$store.state.userInfo.avatar"  /></div>
+      </li>
       <span class="msg-more" id="msg-more">
         <ul>
           <li>复制</li>
@@ -32,7 +40,7 @@
           <li>删除</li>
         </ul>
       </span>
-    </section>
+    </div>
     <footer class="dialogue-footer">
       <div class="component-dialogue-bar-person">
         <span
@@ -53,6 +61,7 @@
         </div>
         <div class="chat-way" v-show="currentChatWay">
           <input
+            v-model="InpVal"
             class="chat-txt"
             type="text"
             v-on:focus="focusIpt"
@@ -60,7 +69,13 @@
           />
         </div>
         <span class="expression iconfont icon-dialogue-smile"></span>
-        <span class="more iconfont icon-dialogue-jia"></span>
+        <span class="more iconfont" 
+        style="font-size: 15px;
+              background: #aa96da;
+              padding: 0px 5px;
+              border-radius: 12px;
+              color: #fff;"  
+            @click="submit">发送</span>
         <div class="recording" style="display: none" id="recording">
           <div
             class="recording-voice"
@@ -93,12 +108,14 @@
   </div>
 </template>
 <script>
-import { computed } from "@vue/runtime-core";
+import { computed} from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import {ref} from "vue"
+import {ref} from "vue";
+import CHAT from '../../client'
 export default {
   name:"dialogue",
+  
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.$store.commit("setPageName", vm.$route.query.name);
@@ -107,18 +124,39 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
+    let InpVal=ref("")
     let pageName = ref(route.query.name);
     let currentChatWay = ref(true); //true为键盘打字,false为语音输入
     let timer = ref(null);
-    //console.log(route)
+    //let CHAT=ref(CHAT);
+    let msgArr=ref(CHAT.msgArr);
     const msgInfo = computed(() => {
       for (let i in store.state.msgList.baseMsg) {
-        if (store.state.msgList.baseMsg[i].mid == route.query.mid) {
+        if (store.state.msgList.baseMsg[i].id == route.query.id) {
            return store.state.msgList.baseMsg[i];
         }
       }
       return {};
     });
+    const submit=()=>{
+      var date=new Date().toLocaleString();      
+      const obj={
+        date:date,
+        text:InpVal.value,
+        toUser:route.query.id,
+      }
+      const lastMsg={
+        date:date,
+        text:InpVal.value,
+      }
+      const id=route.query.id
+      store.commit('changeLastMsg',{lastMsg,id});
+      InpVal.value="";
+      CHAT.submit(obj)
+      msgArr.value=CHAT.msgArr;
+      console.log(msgArr.value)
+    };
+    
     const msgInfo2=computed(()=>{
         return encodeURIComponent(JSON.stringify(msgInfo.value))
     })
@@ -136,7 +174,10 @@ export default {
       focusIpt,
       blurIpt,
       msgInfo,
-      msgInfo2
+      msgInfo2,
+      submit,
+      InpVal,
+      msgArr
     };
   },
   directives: {
@@ -253,4 +294,6 @@ export default {
     background:#c6c7ca;
 
 } 
+
+    
 </style>

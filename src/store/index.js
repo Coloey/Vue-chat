@@ -13,28 +13,42 @@ export default createStore({
         currentPageName:"信息",//用于在header组件中显示当前页标题
         headerStatus: true,//显示true或者隐藏false header组件
         tipsStatus:false,//控制首页右上角菜单显示
+        userInfo:{
+            "avatar":"https://th.bing.com/th/id/OIP.qRVjKh2NMb3kuzi1GpeS3AAAAA?w=165&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7",
+            "name":"Coloey",
+            "mid":123456,
+            "class":"19软件工程1班",
+            "password":123456
+        },
         msgList:{
             stcikMsg:[],//置顶消息列表
             baseMsg:[
                 {
-                    "mid":0,
+                    
+                    
+                    "id":"id_Banshi",
                     "read":true,
                     "newMsgCount":0,
                     "quiet":false,
+                    
                     "msg":[
                         {"text":"欢迎点击办事指南,如果你有什么关于学业竞赛等上面的问题需要咨询的可以发消息给我,系统会自动回复并对您的问题进行解答及指引",
                         "date":1477778578910,
                         "name":"办事指南",
-                        "headerUrl":"https://www.ludicade.com/img/cms/logo-mesure-2.jpg"}
+                        "headerUrl":"https://www.ludicade.com/img/cms/logo-mesure-2.jpg"},                   
                     ],
+                    "lastMsg":{},             
                     "user":contact.getUserInfo('id_Banshi') 
 
                 },
+                
                 {
-                "mid":1,//消息id的唯一标识
+                
+                "id":"id_LiChun",
                 "read":false,
                 "newMsgCount":2,
                 "quiet":false,//true消息免打扰,false提示新消息
+               
                 "msg":[
                     {//对话框的聊天记录
                     "text":"你好啊",
@@ -50,14 +64,17 @@ export default createStore({
 
                     },     
                 ],
+                "lastMsg":{},
                 "user":contact.getUserInfo('id_LiChun')
 
             },
             {
-                "mid":2,
+                
+                "id":"id_WangWu",
                 "read":false,
                 "newMsgCount":2,
                 "quiet":false,
+                
                 "msg":[
                     {//对话框的聊天记录
                     "text":"您好",
@@ -72,19 +89,23 @@ export default createStore({
                     },
                     
                 ],
+                "lastMsg":{},
                 "user":contact.getUserInfo('id_WangWu')
             },
             {
-                "mid":3,
+               
+                "id":"id_ZhaoLiu",
                 "read":false,
                 "newMsgCount":2,
                 "quiet":false,
+               
                 "msg":[
                     {//对话框的聊天记录
                     "text":"同学你好",
                     "date":1488117967678,
                     "name":"赵六",
-                    "headerUrl":"https://th.bing.com/th/id/OIP.G2D87CoGPOcSsVXYcrHfmgAAAA?pid=ImgDet&rs=1",},
+                    "headerUrl":"https://th.bing.com/th/id/OIP.G2D87CoGPOcSsVXYcrHfmgAAAA?pid=ImgDet&rs=1",
+                    },
                     {
                         "text":'可以,明天到我办公室一趟',
                         "date":1488117978789,
@@ -93,6 +114,7 @@ export default createStore({
 
                     },     
                 ],
+                "lastMsg":{},
                 "user":contact.getUserInfo('id_ZhaoLiu')
             },
         ]

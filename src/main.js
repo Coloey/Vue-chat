@@ -4,8 +4,8 @@ import store from './store'
 import router from "./router"
 import ElementPlus from 'element-plus'
 import 'element-plus/theme-chalk/index.css'
+import 'element-plus/theme-chalk/display.css'
 const app=createApp(App)
 app.use(ElementPlus)
 app.use(store)
-app.use(router)
-app.mount('#app')
+app.use(router).mount('#app')

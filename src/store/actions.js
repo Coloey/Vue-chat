@@ -1,22 +1,25 @@
 export default{
     toggleMsgRead:({commit,state},id)=>{
-        if(state.msgList.baseMsg[id].read){
+       let i=state.msgList.baseMsg.findIndex(v=>v.id===id)
+        if(state.msgList.baseMsg[i].read){
             return '';
         }
-        else state.msgList.baseMsg[id].read=true   
+        else state.msgList.baseMsg[i].read=true   
        
-        if (!state.msgList.baseMsg[id].quiet) {
-          if (state.msgList.baseMsg[id].read) {
-            commit('minusNewMsg',id);
+        if (!state.msgList.baseMsg[i].quiet) {
+          if (state.msgList.baseMsg[i].read) {
+            commit('minusNewMsg',i);
           } else {
-            commit('addNewMsg',id);
+            commit('addNewMsg',i);
           }
         }
     },
     deleteMsgEvent:({commit,state},id)=>{
-        if (!state.msgList.baseMsg[id].quiet && !state.msgList.baseMsg[id].read) {
-          commit('minusNewMsg',id);
+      let i=state.msgList.baseMsg.findIndex(v=>v.id===id)
+        if (!state.msgList.baseMsg[i].quiet && !state.msgList.baseMsg[i].read) {
+          commit('minusNewMsg',i);
           return true;
         }else return false
-    }
+    },
+   
 } 

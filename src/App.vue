@@ -7,7 +7,7 @@
       </header>
       <!-- 搜索框 -->
       <search></search>
-      <!-- 三个页面“信息”，“通讯录” -->
+      <!-- 三个页面“信息”,“通讯录” -->
       <section class="app-content">
         <router-view v-slot="{ Component }" name="default">
           <transition>
@@ -18,7 +18,7 @@
         </router-view>
       </section>
       <!-- 底部导航路由 -->
-      <footer>
+      <footer class="app-footer">
         <wx-nav></wx-nav>
       </footer>
     </div>

@@ -5,15 +5,15 @@
         <div class="weui-cell weui-cell_access">
           <div class="weui-cell_hd">
             <img
-              src="https://th.bing.com/th/id/OIP.qRVjKh2NMb3kuzi1GpeS3AAAAA?w=165&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+              :src="$store.state.userInfo.avatar"
               alt=""
               class="self-header"
             />
           </div>
           <div class="weui-cell_bd">
-            <h4 class="self-name">张小小</h4>
-            <p class="self-wxid">id:201914145</p>
-            <p class="self-wxid">班级：19软件工程1班</p>
+            <h4 class="self-name">{{$store.state.userInfo.name}}</h4>
+            <p class="self-wxid">id:{{$store.state.userInfo.mid}}</p>
+            <p class="self-wxid">班级：{{$store.state.userInfo.class}}</p>
           </div>
         </div>
       </div>
@@ -32,6 +32,7 @@
 </template>
 <script>
 import { ref } from "vue";
+
 export default {
   name: "self",
   mixins: [window.mixin],
