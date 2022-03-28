@@ -5,15 +5,17 @@
         <div class="weui-cell weui-cell_access">
           <div class="weui-cell_hd">
             <img
-              :src="$store.state.userInfo.avatar"
+              :src="userInfo.user_pic"
               alt=""
               class="self-header"
             />
           </div>
           <div class="weui-cell_bd">
-            <h4 class="self-name">{{$store.state.userInfo.name}}</h4>
-            <p class="self-wxid">id:{{$store.state.userInfo.mid}}</p>
-            <p class="self-wxid">班级：{{$store.state.userInfo.class}}</p>
+            <h4 class="self-name">{{userInfo.username}}</h4>
+            <p class="self-wxid">id:{{userInfo.id}}</p>
+            <p class="self-wxid">email:{{userInfo.email}}</p>
+            <p class="self-wxid">昵称:{{userInfo.nickname}}</p>
+            <p class="self-wxid">班级:{{userInfo.class}}</p>
           </div>
         </div>
       </div>
@@ -31,15 +33,18 @@
   </div>
 </template>
 <script>
-import { ref } from "vue";
-
+import { computed, ref } from "vue";
+import { useStore} from "vuex"
 export default {
   name: "self",
   mixins: [window.mixin],
   setup() {
     const pageName = ref("我");
+    const store=useStore();
+    const userInfo=computed(()=>store.getters.getUserInfo);
     return {
       pageName,
+      userInfo
     };
   },
 };

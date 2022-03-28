@@ -1,12 +1,13 @@
 <template>
-  <login v-if="$store.state.logining"></login>
-  <div id="app" v-if="!($store.state.logining)">
+  <div id="app">
     <div class="outer" :class="{'hideLeft':$route.path.split('/').length>2}">
-      <header class="app-header" :class="{'header-hide':!$store.state.headerStatus}"> 
+    <div :class="{'hideLeft':$route.path.indexOf('login')!==-1||$route.path.indexOf('register')!=-1}">
+       <header class="app-header" :class="{'header-hide':!$store.state.headerStatus}"> 
         <wx-header :pageName="pageName"></wx-header>
       </header>
       <!-- 搜索框 -->
       <search></search>
+    </div>
       <!-- 三个页面“信息”,“通讯录” -->
       <section class="app-content">
         <router-view v-slot="{ Component }" name="default">
@@ -18,7 +19,7 @@
         </router-view>
       </section>
       <!-- 底部导航路由 -->
-      <footer class="app-footer">
+      <footer class="app-footer" :class="{'hideLeft':$route.path.indexOf('login')!==-1||$route.path.indexOf('register')!=-1}">
         <wx-nav></wx-nav>
       </footer>
     </div>
@@ -36,8 +37,8 @@ import WxNav from "./components/common/wx-nav.vue";
 import search from "./components/common/search.vue";
 import login from "./components/login/login.vue"
 import mixin from "./store/mixin";
-import { useRoute } from 'vue-router';
-import {ref,watch} from 'vue'
+import { useRoute,useRouter } from 'vue-router';
+import {ref,watch,onMounted} from 'vue'
 import {useStore} from 'vuex'
 window.mixin=mixin
 export default {
@@ -48,6 +49,7 @@ export default {
             search,
             login,
         },
+        
         setup(){
             const pageName=ref("")
             const routerAnimate=ref(false)
@@ -55,6 +57,13 @@ export default {
             const leaveAnimate=ref("")  //页面离开动效
             const route=useRoute()
             const store=useStore()
+             const router = useRouter()
+             onMounted(()=>{
+               if(window.localStorage.getItem('token')==undefined){
+                 router.push("/login")
+               }
+             })
+           
             //监听route ,为进入内页设置不同的过渡效果
             watch(route,(to,from)=>{
                 const toDepth=to.path.split('/').length
@@ -79,11 +88,18 @@ export default {
                 routerAnimate,
                 enterAnimate,
                 leaveAnimate,
+                
             }
         },     
 };
 </script>
 <style lang="less">
+/*.hideLeft {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+    transition: 1.0s;
+    overflow: hidden;
+}*/
 /*将公用的样式统一在此导入*/
 
 @import "assets/css/base.css";

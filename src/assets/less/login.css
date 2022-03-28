@@ -51,8 +51,15 @@
   border-radius: 10px;
   height: 30px;
 }
-.login .my-login .me-login-button {
+.login .my-login .my-login-button {
   position: absolute;
   left: 30%;
-  bottom: -30px;
+  bottom: -40px;
+}
+.login .my-login .register {
+  position: absolute;
+  left: -55%;
+  bottom: -61px;
+  font-size: 5px;
+  color: #5f5e5e;
 }

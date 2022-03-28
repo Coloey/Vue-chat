@@ -31,7 +31,7 @@
         v-show="item.toUser==$route.query.id"
       >
         <p class="text"  v-more>{{ item.text }}</p>
-        <div class="header"><img :src="$store.state.userInfo.avatar"  /></div>
+        <div class="header"><img :src="$store.state.userInfo.user_pic"  /></div>
       </li>
       <span class="msg-more" id="msg-more">
         <ul>

@@ -7,15 +7,21 @@ export default createRouter({
         component:()=>Promise.resolve(import("../components/chat/chat.vue"))
 
     },
-        /*{
-        path: '/chat',
-        name: "信息",
-        component: ()=>Promise.resolve(import("../components/chat/chat.vue"))
-    },*/ {
+    {
+        path: '/login',
+        name: "login",
+        component:
+            ()=>Promise.resolve(import("../components/login/login.vue"))
+    },
+        {
+        path: '/register',
+        name: "注册",
+        component: ()=>Promise.resolve(import("../components/register/register.vue"))
+    }, {
         path: '/chat/dialogue/',
         name: "",
         components: {
-            "default":()=>Promise.resolve(import("../components/chat/chat.vue")),
+            "default":()=>Promise.resolve(import("../components/chat/chat.vue")),           
             "subPage":()=>Promise.resolve(import("../components/chat/dialogue.vue"))
         }
     },
@@ -27,7 +33,7 @@ export default createRouter({
     },
     {
         path: '/contact',
-        name: "通讯录",
+        name: "",
         component:()=>Promise.resolve(import("../components/contact/contact.vue"))
     },
     {
@@ -66,5 +72,12 @@ export default createRouter({
             'subPage':()=>Promise.resolve(import("../components/self/setting.vue"))
         }
     },
+    {
+        path:'/self/setting/setPassword',
+        name:'',
+        components:{
+            'subPage':()=>Promise.resolve(import("../components/setPassword/setPassword.vue"))
+        }
+    }
 ]
 })

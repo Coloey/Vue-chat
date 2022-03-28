@@ -52,5 +52,9 @@ export default {
         //console.log(departmentsList)
         return departmentsList
     },
+    //获取用户信息
+    getUserInfo(state){
+        return state.userInfo;
+    }
    
 }

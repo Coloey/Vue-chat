@@ -29,23 +29,9 @@ export default{
     loginSuccess(state){
         state.logining=false
     },
-    //增加最近联系人
-   /* addLatestContact(state,{id,obj}){
-        //如果基本联系人里面包含这个人，则直接返回
-        if((state.msgList.baseMsg.findIndex(v=>v.id===id))!==-1)return;
-        let newContact=state.allContacts.find(v=>v.id==id);
-        newContact={
-            ...newContact,
-            "read":true,
-            "quite":false,
-            "newMsgCount":0,
-            "user":contact.getUserInfo(id),
-            "msg":[],
-            "lastMsg":obj[obj.length-1]
-  
-        }
-        state.msgList.baseMsg.unshift(newContact);
-    }*/
-     
-
+    //修改个人信息
+    getUserInfo(state,{data}){
+        state.userInfo=data;
+    }
+    
 }

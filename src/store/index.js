@@ -13,19 +13,12 @@ export default createStore({
         currentPageName:"信息",//用于在header组件中显示当前页标题
         headerStatus: true,//显示true或者隐藏false header组件
         tipsStatus:false,//控制首页右上角菜单显示
-        userInfo:{
-            "avatar":"https://th.bing.com/th/id/OIP.qRVjKh2NMb3kuzi1GpeS3AAAAA?w=165&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7",
-            "name":"Coloey",
-            "mid":123456,
-            "class":"19软件工程1班",
-            "password":123456
-        },
+        userInfo:{},
         msgList:{
             stcikMsg:[],//置顶消息列表
             baseMsg:[
                 {
-                    
-                    
+                     
                     "id":"id_Banshi",
                     "read":true,
                     "newMsgCount":0,

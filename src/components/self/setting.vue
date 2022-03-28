@@ -9,10 +9,13 @@
         </div>
     </header>
     <section>
-        <div class="weui-cells weui-cell weui-cell_access">
-            <div class="weui-cell_bd">账号与安全</div>
-            <div class="weui-cell_ft">已保护</div>
-        </div>
+        <router-link :to="{path:'/self/setting/setPassword'}">
+            <div class="weui-cells weui-cell weui-cell_access">
+                <div class="weui-cell_bd">账号与安全</div>
+                <div class="weui-cell_ft">已保护</div>
+            </div>
+        </router-link>
+        
         <div class="weui-cells weui-cell weui-cell_access">
             <div class="weui-cell_bd">新消息通知</div>
         </div>
@@ -20,7 +23,19 @@
             <div class="weui-cell_bd">关于校园通</div>
         </div>
         <div>
-             <a href="javascript:;" class="weui-btn weui-btn_default" style="width: 50%; margin-top:50px"> 切换账号</a>
+              <el-popconfirm
+                confirm-button-text="Yes"
+                cancel-button-text="No"
+                :icon="InfoFilled"
+                icon-color="red"
+                title="确定切换账号吗？"
+                @confirm="confirmEvent"
+                @cancel="cancelEvent"
+             >
+                <template #reference>
+                <span class="weui-btn weui-btn_default" style="width: 50%; left: 50%;transform: translateX(-100%);margin-top:50px">切换账号</span>
+                </template>
+             </el-popconfirm>  
               <el-popconfirm
                 confirm-button-text="Yes"
                 cancel-button-text="No"
@@ -31,23 +46,22 @@
                 @cancel="cancelEvent"
              >
                 <template #reference>
-                <el-button class="weui-btn weui-btn_default" style="width: 50%; left: 50%;transform: translateX(-50%);background:#26c6da">退出登录</el-button>
+                <span class="weui-btn weui-btn_default" style="width: 50%; left: 50%;transform: translateX(-100%);">退出登录</span>
                 </template>
-             </el-popconfirm>
-             
+             </el-popconfirm>  
         </div>
     </section>
 </div>
 </template>
 
 <script>
-import { InfoFilled } from '@element-plus/icons-vue'
-import {useStore} from "vuex"
+import {logout} from "../../utils/api"
 export default {
   setup(){
-      const store=useStore();
       const confirmEvent=()=>{
-            store.state.logining=true
+           logout().then(()=>{
+
+           })
       }
       return {
           confirmEvent
@@ -55,10 +69,8 @@ export default {
 
   }
     
-
 }
 
- 
 </script>
 
 <style lang="less">
@@ -76,10 +88,7 @@ export default {
                     svg {
                         width: 25px;
                         margin: 3px;
-                    }
-
-                
-                
+                    } 
             }
         }
         .el-popconfirm__action {
