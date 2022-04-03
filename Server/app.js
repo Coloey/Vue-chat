@@ -1,3 +1,4 @@
+//const store=require("../src/store")
 const express=require('express');
 const cors=require('cors')
 const app=express();
@@ -34,10 +35,62 @@ app.use('/my',userInfoRouter)
 app.use(function(err,req,res,next){
     //数据验证失败
     if(err instanceof Joi.ValidationError)return res.cc(err)
-    if(err.name==="UnauthorizedError")return res.send({status:401,message:"身份认证失败"})
+    if(err.name==="UnauthorizedError")return res.send({status:401,message:"登录已过期，请重新登录"})
     //未知错误
     res.cc(err)
 })
-app.listen(3007,()=>{
+const {createServer}=require('http')
+const server=createServer(app)
+const io=require('socket.io')(server,{
+    cors: {
+        origin: "http://localhost:8081"
+      }
+})
+let onlineUsers={}
+let onlineCount=0
+let user=''
+io.on('connection',function(socket){
+    socket.emit('open');
+    let toUser={}
+    let fromUser={}
+    let date=""
+    socket.on('addUser',function(username){
+        if(!onlineUsers.hasOwnProperty(username)){
+            //console.log("socket",socket.id)
+            onlineUsers[username]=socket
+            onlineCount+=1
+        }
+        user=username
+        console.log(onlineUsers[username].id)
+        console.log("onlineCount",onlineCount)
+    })
+    socket.on('sendMsg',(obj)=>{
+        console.log(obj);
+        toUser=obj.toUser,
+        fromUser=obj.fromUser
+        date=obj.date
+        if(toUser in onlineUsers){//接收方
+          onlineUsers[toUser].emit(toUser,obj)//两边都显示信息
+          onlineUsers[fromUser].emit(fromUser,obj)
+           
+        }
+        else{
+            onlineUsers[fromUser].emit(fromUser,obj)
+            console.log(toUser+'不在线')
+        }
+
+
+    })   
+    socket.on('disconect',()=>{
+        console.log('user disconnected')
+        delete onlineUsers[fromUser]
+        
+    })
+    
+})
+
+
+
+server.listen(3007,()=>{
     console.log('run in http://127.0.0.1:3007')
 })

@@ -18,7 +18,7 @@ exports.register=(req,res)=>{
         }
          //用户名可以使用,对密码进行加密,调用bcrypt.hashSync(明文密码,随机盐长度)
         userInfo.password=bcrypt.hashSync(userInfo.password,10)
-        console.log(userInfo)
+        //console.log(userInfo)
         //注册新用户
         const sql="insert into ev_users set ?"
         db.query(sql,{username:userInfo.username,password:userInfo.password},(err,result)=>{

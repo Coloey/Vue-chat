@@ -3,8 +3,8 @@ export default createRouter({
     history:createWebHashHistory(),
     routes:[{
         path:'/',
-        name:"信息",
-        component:()=>Promise.resolve(import("../components/chat/chat.vue"))
+        name:"通讯录",
+        component:()=>Promise.resolve(import("../components/contact/contact.vue"))
 
     },
     {
@@ -17,20 +17,7 @@ export default createRouter({
         path: '/register',
         name: "注册",
         component: ()=>Promise.resolve(import("../components/register/register.vue"))
-    }, {
-        path: '/chat/dialogue/',
-        name: "",
-        components: {
-            "default":()=>Promise.resolve(import("../components/chat/chat.vue")),           
-            "subPage":()=>Promise.resolve(import("../components/chat/dialogue.vue"))
-        }
-    },
-    {
-        path: '/chat/dialogue/dialogue-detail/',
-        name: "dialogueDetail",
-        components: {"subPage":()=> Promise.resolve(import("../components/chat/dialogue-detail.vue"))},
-
-    },
+    }, 
     {
         path: '/contact',
         name: "",
@@ -58,6 +45,11 @@ export default createRouter({
         name:'',
         components:{"subPage":()=>Promise.resolve(import("../components/contact/contact-dialogue.vue"))}
 
+    },
+    {
+        path:'/contact/details/contact-dialogue-details/',
+        name:'',
+        components:{"subPage":()=>Promise.resolve(import("../components/contact/contact-dialogue-details.vue"))}
     },
     {
         path:'/self',

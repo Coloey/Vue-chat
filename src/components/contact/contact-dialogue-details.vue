@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
     <header id="wx-header">
       <div class="center">
         <div class="iconfont icon-return-arrow" v-on:click="$router.back()">
@@ -10,8 +10,8 @@
     </header>
     <div class="chat-collect">
       <div class="member">
-        <div><img :src="msgInfo2.user.headerUrl" alt="" /></div>
-        <p>{{ msgInfo2.user.name }}</p>
+        <div><img :src="msgInfo2.headerUrl" alt="" /></div>
+        <p>{{ msgInfo2.name }}</p>
       </div>
     </div>
     <div class="weui-cells">
@@ -47,14 +47,15 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 export default {
-  name: "dialogue-detail",
-  setup() {
+    name:"contact-dialogur-details",
+    setup() {
     const route = useRoute();
     const msgInfo2 = computed(() => {
       return JSON.parse(decodeURIComponent(route.query.msgInfo2));
@@ -64,6 +65,7 @@ export default {
     };
   },
 };
+
 </script>
 
 <style>
@@ -105,6 +107,4 @@ export default {
   background-color: #66bb6a;
 }
 </style>
-  
 
-     

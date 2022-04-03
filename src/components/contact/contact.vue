@@ -26,7 +26,7 @@
                             <img :src="item.headerUrl" class="home__mini-avatar___1nSrW">
                         </div>
                         <div class="weui-cell__bd">
-                            {{item.name}}
+                            {{item.nickname}}
                         </div>
                     </router-link>
                 </div>

@@ -1,6 +1,14 @@
 <template>
   <div>
     <header id="wx-header">
+      <div class="other">
+             <router-link
+          :to="{ path:'/contact/details/contact-dialogue-details',query:{msgInfo2}}"
+          tag="span"
+          class="iconfont icon-chat-friends"
+        >
+        </router-link>
+      </div>
       <div class="center">
         <div class="iconfont icon-return-arrow" @click="$router.back()">
           <span>返回</span>
@@ -9,15 +17,24 @@
       </div>
     </header>
     <div class="dialogue-section clearfix">
-       <li 
+      <div  v-for="(item, index) in msg"
+        :key="index"  >
+         <li 
         class="self clearfix"
-        v-for="(item, index) in msgArr"
-        :key="index"
-        v-show="item.toUser==$route.query.id"        
-      >
+        v-show="item.toUser==$route.query.username&&item.fromUser==$store.state.userInfo.username"     
+      >     
         <p class="text"  v-more>{{ item.text }}</p>
-        <div class="header"><img :src="$store.state.userInfo.user_pic"  /></div>
+        <div class="header"><img :src="$store.state.userInfo.user_pic"  /></div>      
       </li>
+       <li 
+        class="other clearfix"
+        v-show="item.toUser==$store.state.userInfo.username&&item.fromUser==$route.query.username" 
+      >
+         <!-- 获取当前聊天的人的头像 -->
+        <div class="header"><img :src="otherpic.headerUrl" /></div>
+         <p class="text"  v-more>{{ item.text }}</p>
+      </li>
+      </div>
       <span class="msg-more" id="msg-more">
         <ul>
           <li>复制</li>
@@ -25,6 +42,9 @@
           <li>删除</li>
         </ul>
       </span>
+    </div>
+    <div class="emoji-container" v-show="emojihowVisible">
+        <emotion @chooseEmojiDefault="chooseEmojiDefault"></emotion>
     </div>
     <footer class="dialogue-footer">
       <div class="component-dialogue-bar-person">
@@ -54,8 +74,8 @@
             @focus="focusIpt"
             @blur="blurIpt"
           />
-        </div>
-        <span class="expression iconfont icon-dialogue-smile"></span>
+        </div>              
+        <span class="expression iconfont icon-dialogue-smile" @click.stop="emojiShow"></span>
         <span class="more iconfont" 
         style="font-size: 15px;
               background: #aa96da;
@@ -63,6 +83,7 @@
               border-radius: 12px;
               color: #fff;" 
         @click="submit">发送</span>
+        
         <div class="recording" style="display: none" id="recording">
           <div
             class="recording-voice"
@@ -98,45 +119,67 @@
 <script>
 import { useRoute } from "vue-router";
 import {useStore} from "vuex";
-import { ref } from "vue";
+import { onMounted,  computed,  ref } from "vue";
+import  contact from "../../store/contacts"
 import CHAT from "../../client"
+import debounce from "../../utils/debounce"
+import emotion from './emotion.vue';
 
 export default {
+  components: { emotion },
   name: "contact-dialogue",
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.$store.commit("setPageName", vm.$route.query.name);
     });
   },
+
   setup() {
     const route = useRoute();
     const store=useStore();
-    let pageName = ref(route.query.name);
     let currentChatWay = ref(true); //true为键盘打字,false为语音输入
     let timer = ref(null);
     let InpVal=ref("");
-    let msgArr=ref(CHAT.msgArr);
-    const submit=()=>{
-      var date=new Date().toLocaleString();         
+    const emojihowVisible=ref(false)
+    const emojiShow=()=>{
+      emojihowVisible.value=!emojihowVisible.value
+    }
+    const chooseEmojiDefault=(e)=>{
+      //console.log(e)
+        InpVal.value+=e;
+    }
+    const msg=computed(()=>{return store.state.msg});
+    const msgInfo =computed(()=>{
+      return contact.getUserInfo(route.query.id)
+    })
+    let pageName = ref(msgInfo.value.nickname);
+    const msgInfo2=computed(()=>{
+      return encodeURIComponent(JSON.stringify(msgInfo.value))//对象作为路由参数时需要先转化为JSON格式的数据
+     })
+    const otherpic=computed(()=>{
+      return contact.getUserInfo(route.query.id)
+    })
+   
+    onMounted(()=>{
+      CHAT.message(store.state.userInfo.username)
+    })
+    const submit=debounce(()=>{
+     
+      var date=new Date().toLocaleString();  
+      //console.log(route.query.id)       
       const obj={
         date:date,
         text:InpVal.value,
-        toUser:route.query.id,
+        read:false,
+        quite:false,
+        fromUser:store.state.userInfo.username,
+        toUser:route.query.username,
       }
-       const lastMsg={
-         date:date,
-         text:InpVal.value,
-       }
-      const id=route.query.id
-      store.commit('changeLastMsg',{lastMsg,id});
+      
       InpVal.value="";
       CHAT.submit(obj)
-      msgArr.value=CHAT.msgArr;
-     // let msg=msgArr.value;
-      //console.log(msg)
-      //store.commit('addLatestContact',{id,msg});
-      //
-    };
+     
+    },500)
     const focusIpt=()=>{
         timer=setInterval(function(){
             document.body.scrollTop=document.body.scrollHeight;
@@ -150,9 +193,15 @@ export default {
         currentChatWay,
         focusIpt,
         blurIpt,
-        msgArr,
         submit,
-        InpVal
+        InpVal,
+        otherpic,
+        msg,
+        msgInfo,
+        msgInfo2,
+        chooseEmojiDefault,
+        emojiShow,
+        emojihowVisible
     }
   },
   directives:{
@@ -241,9 +290,11 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import "../../assets/less/dialogue.less";
 .say-active {
     background: #c6c7ca;
 }
+  
+
 </style>

@@ -62,6 +62,7 @@
 
 <script>
 import {login,getUserInfo} from "../../utils/api"
+import CHAT from "../../client"
 export default {
   name: "登录",
   data() {
@@ -78,13 +79,15 @@ export default {
   },
   methods: {
     handleLogin() {
-      login({username:this.userForm.username,password:this.userForm.password}).then((res)=>{
+      login({username:this.userForm.username,password:this.userForm.password}).then(()=>{
         this.$router.push({path:'/'});
          //登录成功后获取用户信息
         getUserInfo().then(()=>{
+          //console.log(res.data.data.id)
+          CHAT.init(this.$store.state.userInfo.username);//使用户初始化服务器
         
         })
-
+        
       })       
     },
     show() {

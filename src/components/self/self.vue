@@ -41,7 +41,8 @@ export default {
   setup() {
     const pageName = ref("我");
     const store=useStore();
-    const userInfo=computed(()=>store.getters.getUserInfo);
+    const userInfo=computed(()=>{store.dispatch('getUserInfo');return store.state.userInfo})
+    //console.log(userInfo)
     return {
       pageName,
       userInfo

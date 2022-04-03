@@ -19,7 +19,7 @@
               </div>
           </div>
       </div>
-      <router-link :to="{path:'/contact/details/contact-dialogue',query:{id:userInfo.id,name:userInfo.name} }" class="weui-btn weui-btn_primary" style="width:90%;margin-top:20px;background-color:#009688"> 发消息</router-link>
+      <router-link :to="{path:'/contact/details/contact-dialogue',query:{id:userInfo.id,username:userInfo.name} }" class="weui-btn weui-btn_primary" style="width:90%;margin-top:20px;background-color:#009688"> 发消息</router-link>
       <a href="javascript:;" class="weui-btn weui-btn_default" style="width: 90%"> 视频</a>
 
   </div>

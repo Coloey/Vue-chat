@@ -2,6 +2,7 @@ import axios from 'axios'
 import {ElLoading,ElMessage} from 'element-plus'
 import router from "../router"
 import store from "../store"
+import CHAT from "../client"
 //const pendingMap=new Map();
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 //创建一个axios实例
@@ -18,20 +19,20 @@ let loading;
 let requestCount=0;
 //显示Loading
 const showLoading=()=>{
-    if(requestCount===0&&!loading){
+    if(requestCount===0&&!loading){//第一次发送请求并且没有loading加载loaing
         loading=ElLoading.service({
             text:'Loading',
             background:'rgba(0,0,0,0.7)',
             spinner:'el-icon-loading',
         })
     }
-    requestCount++;
+    requestCount++;//多次请求
 }
 //隐藏loading
 const hideLoading=()=>{
     requestCount--;
     if(requestCount===0){
-        loading.close()
+        loading.close()//直到请求都结束Loading才关闭
     }
 }
 //请求拦截器
@@ -56,22 +57,24 @@ instance.interceptors.request.use((config)=>{
 instance.interceptors.response.use((response)=>{
     hideLoading()
     //响应成功
-    console.log('拦截器报错')
-    console.log(response)
+   // console.log('拦截器报错')
+   // console.log(response)
     const status=response.data.status;
     if(status!=1){
         switch(status){
             case 0: //响应成功后如果是登录成功有token把token存储在本地
                 if(response.data.token!=undefined)window.localStorage.setItem('token',response.data.token);
                 break;
-            case 200://获取用户信息成功后存储在state里
+            case 200://获取用户信息成功后存储在localStorage里和store
                 console.log(response.data);
-                store.commit("getUserInfo",response.data);
+                store.commit("saveUserInfo",(response.data).data);
+                window.localStorage.setItem('userInfo',JSON.stringify((response.data).data));
                 break;
             case 401://登录过期跳转到登录页面
-            case 201://退出登录清空token跳转登录页面
-                //const router=useRouter();
+            case 201://退出登录清空token跳转登录页面                
                 window.localStorage.removeItem('token');
+                window.localStorage.removeItem('userInfo')
+                CHAT.logout();
                 router.push("/login");  
         }
         if(response.data.message)ElMessage.success(response.data.message)           
@@ -82,21 +85,11 @@ instance.interceptors.response.use((response)=>{
         return Promise.reject(response);        
     }
      
-    //return response.data;
 },(error)=>{
     console.log(error);
     //响应错误
     if(error.response&&error.response.status){
-        let message=""
-        const status=error.response.status
-        switch(status){
-            case 400:message="用户名不存在";break;
-            case 402:message="身份认证失败";break;
-            case 405:message="数据验证失败";break;
-        }
-        ElMessage.error(message);
         return Promise.reject(error)
-
     }
     return Promise.reject(error);
 
