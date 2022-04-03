@@ -3,17 +3,13 @@ import {io} from "socket.io-client"
 import store from "../src/store"
 let socket=io();
 const CHAT={
-    msgArr:[],
     username:null,
-    
     init:function(username){
         socket=io.connect("http://127.0.0.1:3007",{'force new connection':true})
         socket.on('open',function(){
           console.log('已连接')
         })
-
-        socket.emit('addUser',username)
-             
+        socket.emit('addUser',username)      
    },
     logout:function(){
         socket.disconnect();

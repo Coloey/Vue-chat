@@ -6,7 +6,7 @@ export default{
     /*changeLastMsg(state,{lastMsg,username}){
         //console.log( state.msgList.baseMsg)
         state.msg.forEach(v=>{v.toUser==username?v.lastMsg=lastMsg:v.lastMsg={}})   
-    },
+    },*/
     toggleTipsStatus(state, status) {
         if (status == -1) {
             state.tipsStatus = false
@@ -25,7 +25,7 @@ export default{
     //减少未读信息
     minusNewMsg(state,i){
         state.newMsgCount<1?state.newMsgCount=0:state.newMsgCount-=state.msgList.baseMsg[i].newMsgCount
-    },*/
+    },
     loginSuccess(state){
         state.logining=false
     },

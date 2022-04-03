@@ -170,8 +170,6 @@ export default {
       const obj={
         date:date,
         text:InpVal.value,
-        read:false,
-        quite:false,
         fromUser:store.state.userInfo.username,
         toUser:route.query.username,
       }

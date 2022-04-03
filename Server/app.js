@@ -43,7 +43,8 @@ const {createServer}=require('http')
 const server=createServer(app)
 const io=require('socket.io')(server,{
     cors: {
-        origin: "http://localhost:8081"
+        origin: "https://coloey.github.io/Vue-chat"
+        //origin:"http://localhost:8081"
       }
 })
 let onlineUsers={}
@@ -61,7 +62,7 @@ io.on('connection',function(socket){
             onlineCount+=1
         }
         user=username
-        console.log(onlineUsers[username].id)
+        //console.log(onlineUsers[username].id)
         console.log("onlineCount",onlineCount)
     })
     socket.on('sendMsg',(obj)=>{
