@@ -33,10 +33,4 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 <<<<<<< HEAD
 
-## 预览
-
-![演示文档](演示文档.gif)
-=======
-### 页面预览
-![演示文档](https://user-images.githubusercontent.com/71813516/154300503-44231130-8ab2-459e-bd49-f1a92337ddb7.gif)
 
