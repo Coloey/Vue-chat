@@ -55,6 +55,8 @@ export default {
         }
         const handleRemove=(file,fileList)=>{
            for(const i in fileList){
+               console.log(fileList[i])
+               //console.log(fileList[i].key)
                if(fileList[i].key===file.uid){
                    fileList.splice(i,1);
                }
