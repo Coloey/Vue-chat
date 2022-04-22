@@ -1,5 +1,5 @@
 <template>
-<div :classclass="departments">
+<div :class="departments">
      <header id="wx-header">
           <div class="center">
               <router-link  to="/contact" tag="div" class="iconfont icon-return-arrow">

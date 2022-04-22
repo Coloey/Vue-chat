@@ -3,8 +3,6 @@ import {ElLoading,ElMessage} from 'element-plus'
 import router from "../router"
 import store from "../store"
 import CHAT from "../client"
-//const pendingMap=new Map();
-//axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 //创建一个axios实例
 var instance=axios.create({
     baseURL:"http://127.0.0.1:3007",
@@ -41,12 +39,7 @@ instance.interceptors.request.use((config)=>{
     //每次发送请求前判断是否存在token如果存在则在header加上token
     const token=window.localStorage.getItem('token');
     token&&(config.headers.Authorization=token)
-    //若请求方式为post，则将data数据转为json字符串
-    // console.log(config.method)
-    //  if(config.method=='post'){     
-    //      config.data=JSON.stringify(config.data);
-      
-    //  }
+    
     return config;
 },(error)=>{
     Promise.reject(error);
@@ -57,8 +50,6 @@ instance.interceptors.request.use((config)=>{
 instance.interceptors.response.use((response)=>{
     hideLoading()
     //响应成功
-   // console.log('拦截器报错')
-   // console.log(response)
     const status=response.data.status;
     if(status!=1){
         switch(status){
@@ -86,9 +77,34 @@ instance.interceptors.response.use((response)=>{
     }
      
 },(error)=>{
-    console.log(error);
-    //响应错误
+    //响应错误 
     if(error.response&&error.response.status){
+        let message="";
+        const status=error.response.status;
+        switch(status){
+            case 500:
+            message = '服务器错误(500)'
+                break
+            case 501:
+                message = '服务未实现(501)'
+                break
+            case 502:
+                message = '网络错误(502)'
+                break
+            case 503:
+                message = '服务不可用(503)'
+                break
+            case 504:
+                message = '网络超时(504)'
+                break
+            case 505:
+                message = 'HTTP版本不受支持(505)'
+                break
+            default:
+                message = `连接出错(${status})!`
+            
+        }
+        ElMessage.error(message)
         return Promise.reject(error)
     }
     return Promise.reject(error);

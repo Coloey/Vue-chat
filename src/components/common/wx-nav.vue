@@ -7,6 +7,12 @@
         <dd>通讯录</dd>
         </dl>
       </router-link>
+      <router-link to="/notice" tag="dl">
+        <dl>
+          <dt class="iconfont icon-find"></dt>
+           <dd>通知</dd>
+        </dl>
+      </router-link>
       <router-link to="/self" tag="dl">
         <dl>
           <dt class="iconfont icon-me"></dt>

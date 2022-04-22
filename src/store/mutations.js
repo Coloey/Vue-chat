@@ -36,6 +36,10 @@ export default{
     //改变聊天信息
     ChangeMsg(state,obj){
         state.msg.push(obj);
+    },
+    //上传朋友圈
+    UploadPost(state,obj){
+        state.posts.push(obj);
 
     }
 }

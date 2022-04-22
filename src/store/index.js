@@ -15,7 +15,8 @@ export default createStore({
         tipsStatus:false,//控制首页右上角菜单显示
         userInfo:{},
         msg:[
-        ],   
+        ],  
+        posts:[] 
               
     },
     mutations,

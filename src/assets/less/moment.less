@@ -1,0 +1,63 @@
+#moments {
+    background: #fff;
+    .weui-tab_content {
+        .cell {
+            background: #fff;
+            display: block;
+            //flex-direction: column;
+            border-bottom: 1px solid #f2eeee;
+            &::before {
+                content: none;
+            }
+            .weui-cell_hd {
+                display:flex;
+                .header {
+                    margin: 15px;
+                    width: 60px ;
+                    height: 60px ;
+
+                }
+                .name {
+                    font-size:20px;
+                    padding: 15px;
+                }
+            }
+            .weui-cell_bd {
+                .textValue {
+                    font-size: 20px; 
+                    padding: 15px;
+                }
+                .figure-list {
+                    margin:0;
+                    padding:0;
+                    &:after {
+                        content:'';
+                        display: block;
+                        clear: both;
+                        height: 0;
+                        overflow: hidden;
+                        visibility: hidden;
+                    }
+                    li {
+                        list-style: none;
+                        float: left;
+                        width: 25.5%;
+                        // margin: 0 2% 2% 0;
+                        img {
+                            position: relative;
+                            width: 100%;
+                            height: 300px;
+                            overflow: hidden;
+                            margin: 0;
+                           
+                        }
+
+                    }
+                }
+                 
+            }
+        }
+
+    }
+    
+}

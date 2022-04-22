@@ -39,12 +39,13 @@ app.use(function(err,req,res,next){
     //未知错误
     res.cc(err)
 })
-const {createServer}=require('http')
+const {createServer}=require('http');
+const { on } = require('events');
 const server=createServer(app)
 const io=require('socket.io')(server,{
     cors: {
-        origin: "https://coloey.github.io/Vue-chat"
-        //origin:"http://localhost:8081"
+        //origin: "https://coloey.github.io"
+        origin:"http://localhost:8081"
       }
 })
 let onlineUsers={}
@@ -82,11 +83,20 @@ io.on('connection',function(socket){
 
 
     })   
+    socket.on('sendPost',(obj)=>{
+        console.log(obj);
+        //fromUser=obj.fromUser
+        for(let username in onlineUsers){
+            console.log(username);
+            onlineUsers[username].emit('post'+username,obj);  
+        }   
+    })
     socket.on('disconect',()=>{
         console.log('user disconnected')
         delete onlineUsers[fromUser]
         
     })
+    
     
 })
 

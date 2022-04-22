@@ -52,6 +52,19 @@ export default createRouter({
         components:{"subPage":()=>Promise.resolve(import("../components/contact/contact-dialogue-details.vue"))}
     },
     {
+        path:'/notice',
+        name:'通知',
+        component:()=>Promise.resolve(import("../components/notice/notice.vue")),
+    },
+    {
+        path:'/notice/post/',
+        name:'',
+        components:{
+            'default':()=>Promise.resolve(import("../components/notice/notice.vue")),
+            'subPage':()=>Promise.resolve(import("../components/notice/post.vue"))
+        }
+    },
+    {
         path:'/self',
         name:'我',
         component:()=>Promise.resolve(import("../components/self/self.vue")),

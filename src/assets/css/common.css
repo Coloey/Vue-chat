@@ -98,39 +98,7 @@ body {
     z-index: 4;
 }
 
-.new-msg-count {
-    position: absolute;
-    font-style: normal;
-    font-family: PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei, Helvetica;
-    right: -9px;
-    top: -5px;
-    z-index: 2;
-    padding: 0 4px;
-    width: auto;
-    min-width: 18px;
-    height: 18px;
-    line-height: 18px;
-    border-radius: 9px;
-    color: #fff;
-    text-align: center;
-    font-size: 14px;
-    background-color: #f43531;
-}
 
-.new-msg-dot {
-    position: absolute;
-    right: -4px;
-    top: -3px;
-    width: 10px;
-    height: 10px;
-    z-index: 2;
-    border-radius: 50%;
-    color: #ffffff;
-    text-align: center;
-    background-color: red;
-    background-color: #f43531;
-    font-size: 0;
-}
 
 .sub-page {
     position: absolute;

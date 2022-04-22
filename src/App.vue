@@ -8,7 +8,7 @@
       <!-- 搜索框 -->
       <search></search>
     </div>
-      <!-- 三个页面“信息”,“通讯录” -->
+      <!-- 三个页面“通讯录” “通知” ”个人“-->
       <section class="app-content">
         <router-view v-slot="{ Component }" name="default">
           <transition>
