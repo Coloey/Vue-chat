@@ -44,7 +44,7 @@ const { on } = require('events');
 const server=createServer(app)
 const io=require('socket.io')(server,{
     cors: {
-        origin: "https://coloey.github.io"
+        origin: "https://coloey.github.io/Vue-chat/"
         //origin:"http://localhost:8081"
       }
 })
