@@ -8,7 +8,7 @@
       <!-- 搜索框 -->
       <search></search>
     </div>
-      <!-- 三个页面“通讯录” “通知” ”个人“-->
+      <!-- 主页路由视图，命名路由-->
       <section class="app-content">
         <router-view v-slot="{ Component }" name="default">
           <transition>
@@ -23,6 +23,7 @@
         <wx-nav></wx-nav>
       </footer>
     </div>
+    <!-- 子页路由视图 -->
     <transition
       name="custom-classes-transition"
       :enter-active-class="enterAnimate"
@@ -68,17 +69,17 @@ export default {
             watch(route,(to,from)=>{
                 const toDepth=to.path.split('/').length
                 const fromDepth=from.path.split('/').length
+                //页面路径深度为2为主页面，设置页面名
                 if(toDepth===2){
                     store.commit("setPageName",to.name)
-
                 }
                 //同一级页面不需要设置过渡效果
                 if(toDepth===fromDepth){
                     return;
                 }
-                  this.enterAnimate = toDepth > fromDepth ? "animated fadeInRight" : "animated fadeInLeft"
+                this.enterAnimate = toDepth > fromDepth ? "animated fadeInRight" : "animated fadeInLeft"
                 this.leaveAnimate = toDepth > fromDepth ? "animated fadeOutLeft" : "animated fadeOutRight"
-                     // 从店面页进入店内页 需要对店内页重新设置离开动效 因为他们处于不同 name 的 router-view
+                // 从店面页进入店内页 需要对店内页重新设置离开动效 因为他们处于不同 name 的 router-view
                 if (toDepth === 3) {
                     this.leaveAnimate = "animated fadeOutRight"
                 }

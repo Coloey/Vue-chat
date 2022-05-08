@@ -1,3 +1,4 @@
+const UglifyJsPlugin=require('uglifyjs-webpack-plugin')
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
     ? '/Vue-chat/'
@@ -12,7 +13,26 @@ module.exports = {
     // webpack配置
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     chainWebpack: () => {},
-    configureWebpack: () => {},
+    configureWebpack:{
+      plugins:[
+        new UglifyJsPlugin({
+          uglifyOptions: {
+              //生产环境自动删除console
+              compress: {
+                  drop_debugger: true,
+                  drop_console: true,
+                  pure_funcs: ['console.log']
+              }
+          },
+          sourceMap: false,
+          parallel: true
+      })
+      ]
+        
+    },
+    css: {
+      extract: false
+    },
     // vue-loader 配置项
     // https://vue-loader.vuejs.org/en/options.html
     // vueLoader: {},
@@ -45,8 +65,10 @@ module.exports = {
       port:8081,
       https: false,
       hotOnly: false,
+      
      before: app => {}
     },
+    
     // 第三方插件配置
     pluginOptions: {
      // ...

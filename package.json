@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "report": "vue-cli-service build --report"
   },
   "dependencies": {
     "@escook/express-joi": "^1.1.1",
@@ -27,6 +28,7 @@
     "sass-loader": "^10.1.1",
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^3.0.0",
     "vue-axios": "^3.4.1",
     "vue-router": "^4.0.12",
