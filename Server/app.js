@@ -44,8 +44,8 @@ const { on } = require('events');
 const server=createServer(app)
 const io=require('socket.io')(server,{
     cors: {
-       // origin: "https://coloey.github.io"
-        origin:"http://localhost:8081"
+        origin: "https://coloey.github.io"
+        //origin:"http://localhost:8081"
       }
 })
 let onlineUsers={}

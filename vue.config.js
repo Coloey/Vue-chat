@@ -16,22 +16,17 @@ module.exports = {
     configureWebpack:{
       plugins:[
         new UglifyJsPlugin({
-          uglifyOptions: {
-              //生产环境自动删除console
-              compress: {
-                  drop_debugger: true,
-                  drop_console: true,
-                  pure_funcs: ['console.log']
-              }
+          uglifyOptions:{
+            compress:{
+              drop_debugger:true,
+              drop_console:true,
+              pure_funcs:['console.log']
+            }
           },
-          sourceMap: false,
-          parallel: true
-      })
-      ]
-        
-    },
-    css: {
-      extract: false
+          sourceMap:false,
+          parallel:true
+        })
+      ],
     },
     // vue-loader 配置项
     // https://vue-loader.vuejs.org/en/options.html
