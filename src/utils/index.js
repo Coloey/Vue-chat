@@ -52,12 +52,39 @@ instance.interceptors.response.use((response)=>{
     //响应成功
     const status=response.data.status;
     if(status!=1){
-        switch(status){
+        //策略模式
+        let stragtegy={
+            0:function(res){
+                //响应成功后如果是登录成功有token把token存储在本地
+                if(res.data.token!==undefined)window.localStorage.setItem('token',res.data.token);
+            },
+            200:function(res){
+                //获取用户信息成功后存储在localStorage里和store
+                store.commit("saveUserInfo",(res.data).data)
+                window.localStorage.setItem('userInfo',JSON.stringify((res.data).data));
+            },
+            401:function(){//登录过期,清空token,跳转到登录页面
+                console.log('1')
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('userInfo')
+                CHAT.logout();
+                router.push("/login");  
+            },
+            201:function(){//退出登录清空token,跳转登录页面  
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('userInfo')
+                CHAT.logout();
+                router.push("/login");  
+
+            }
+        } 
+        stragtegy[status]&&stragtegy[status](response)
+        /*switch(status){
             case 0: //响应成功后如果是登录成功有token把token存储在本地
                 if(response.data.token!=undefined)window.localStorage.setItem('token',response.data.token);
                 break;
             case 200://获取用户信息成功后存储在localStorage里和store
-                console.log(response.data);
+                //console.log(response.data);
                 store.commit("saveUserInfo",(response.data).data);
                 window.localStorage.setItem('userInfo',JSON.stringify((response.data).data));
                 break;
@@ -67,7 +94,7 @@ instance.interceptors.response.use((response)=>{
                 window.localStorage.removeItem('userInfo')
                 CHAT.logout();
                 router.push("/login");  
-        }
+        }*/
         if(response.data.message)ElMessage.success(response.data.message)           
         return Promise.resolve(response); 
     }
@@ -77,33 +104,30 @@ instance.interceptors.response.use((response)=>{
     }
      
 },(error)=>{
+    let stragtegy={
+        500:function(){
+            return '服务器错误(500)'
+        },
+        501:function(){
+            return '服务未实现(501)'
+        },
+        502:function(){
+            return '网络错误(502)'
+        },
+        503:function(){
+            return '服务不可用(503)'
+        },
+        504:function(){
+            return '网络超时(504)'
+        },
+        505:function(){
+            return 'HTTP版本不受支持(505)'
+        },
+    }
     //响应错误 
     if(error.response&&error.response.status){
-        let message="";
         const status=error.response.status;
-        switch(status){
-            case 500:
-            message = '服务器错误(500)'
-                break
-            case 501:
-                message = '服务未实现(501)'
-                break
-            case 502:
-                message = '网络错误(502)'
-                break
-            case 503:
-                message = '服务不可用(503)'
-                break
-            case 504:
-                message = '网络超时(504)'
-                break
-            case 505:
-                message = 'HTTP版本不受支持(505)'
-                break
-            default:
-                message = `连接出错(${status})!`
-            
-        }
+        let message=(stragtegy[status]&&stragtegy[status]())||`连接出错(${status})!`;
         ElMessage.error(message)
         return Promise.reject(error)
     }
