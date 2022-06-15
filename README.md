@@ -11,7 +11,7 @@
 
 项目难点：
 
-1 实现实时聊天，soket.io的主要靠emit()和on()实现实时聊天，关键在于设计对话的数据结构，对话用一个对象保存，里面包含发送者姓名，接收者姓名，信息，将对话展示在对话页面中主要靠fromUser,toUser识别，我方对话：fromUser===username&&toUser===$router.query.name,对方对话：fromUser===$router.query.name&&toUser==username
+1 实现实时聊天，socket.io的主要靠emit()和on()实现实时聊天，关键在于设计对话的数据结构，对话用一个对象保存，里面包含发送者姓名，接收者姓名，信息，将对话展示在对话页面中主要靠fromUser,toUser识别，我方对话：fromUser===username&&toUser===$router.query.name,对方对话：fromUser===$router.query.name&&toUser==username
 
 服务端用一个onLineUsers对象存储登录的用户socket对象，属性为username，这样用onLineUsers[username]就可以获得不同的socket对象，进而实现触发与接收事件
 
@@ -23,7 +23,7 @@
 
 设置headers中的Content-Type统一为'application/x-www-form-urlencoded'
 
-(2)设置请求拦截器，showLoading,如果有token并且token有值时config..headers.Authorization=token，返回配置config
+(2)设置请求拦截器，showLoading,如果有token并且token有值时config.headers.Authorization=token，返回配置config
 
 (3)设置响应拦截器。hideLoading,根据响应码去判断响应成功还是失败，响应成功执行一系列操作，比如存储用户信息和token等，再Promise.resolve()失败则显示相应失败原因，再Promise.reject()
 
