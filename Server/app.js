@@ -18,6 +18,7 @@ app.use((req,res,next)=>{
 })
 
 //解析token的中间件
+//api开头的接口都不需要进行token解析，配置成功了express-jwt这个中间件，可以把解析出来的用户信息挂载到req.user上
 const expressJWT=require('express-jwt')
 const config=require('./config')
 app.use(expressJWT({
@@ -43,12 +44,13 @@ const {createServer}=require('http');
 const { on } = require('events');
 const server=createServer(app)
 const io=require('socket.io')(server,{
+    //服务端配置cors
     cors: {
         origin: "https://coloey.github.io"
         //origin:"http://localhost:8081"
       }
 })
-let onlineUsers={}
+let onlineUsers={}//存储在线用户的对象
 let onlineCount=0
 let user=''
 io.on('connection',function(socket){
@@ -57,13 +59,14 @@ io.on('connection',function(socket){
     let fromUser={}
     let date=""
     socket.on('addUser',function(username){
+        // eslint-disable-next-line no-prototype-builtins
         if(!onlineUsers.hasOwnProperty(username)){
             //console.log("socket",socket.id)
             onlineUsers[username]=socket
             onlineCount+=1
         }
         user=username
-        //console.log(onlineUsers[username].id)
+        console.log(onlineUsers[username].id)
         console.log("onlineCount",onlineCount)
     })
     socket.on('sendMsg',(obj)=>{
@@ -73,15 +76,12 @@ io.on('connection',function(socket){
         date=obj.date
         if(toUser in onlineUsers){//接收方
           onlineUsers[toUser].emit(toUser,obj)//两边都显示信息
-          onlineUsers[fromUser].emit(fromUser,obj)
-           
+          onlineUsers[fromUser].emit(fromUser,obj)          
         }
         else{
             onlineUsers[fromUser].emit(fromUser,obj)
             console.log(toUser+'不在线')
         }
-
-
     })   
     socket.on('sendPost',(obj)=>{
         console.log(obj);
@@ -95,12 +95,8 @@ io.on('connection',function(socket){
         console.log('user disconnected')
         delete onlineUsers[fromUser]
         
-    })
-    
-    
+    })    
 })
-
-
 
 server.listen(3007,()=>{
     console.log('run in http://127.0.0.1:3007')

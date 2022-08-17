@@ -27,8 +27,6 @@ export const getUserInfo=()=>{
     return axios({
         url:'/my/getUserInfo',
         method:'get',
-        
-
     })
 }
 export const updatePassword=(data)=>{

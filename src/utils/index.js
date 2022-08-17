@@ -13,7 +13,7 @@ var instance=axios.create({
 
 })
 let loading;
-//多次请求时
+//多次请求时 z
 let requestCount=0;
 //显示Loading
 const showLoading=()=>{

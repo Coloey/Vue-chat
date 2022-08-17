@@ -11,7 +11,7 @@
             <el-button class="cancle" type="primary" @click="cancle">取消</el-button>
             <el-button class="post" type="primary"  @click="submit">发布</el-button>
         </div>   
-        <textarea name="" id="" cols="30" rows="10" placeholder="请在此处编辑" v-model="textValue" >
+        <textarea name="" id="" cols="30" rows="10" placeholder="请在此处编辑" v-model="textValue">
         </textarea>
         <el-upload action="#" list-type="picture-card" :auto-upload="false" 
          :file-list="fileList" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" 
@@ -26,15 +26,15 @@
 </div> 
 </template>
 <script>
-import { Plus } from '@element-plus/icons-vue'
 import {reactive, ref} from "vue"
-import {ElMessage} from 'element-plus'
+import {ElMessage,ElUpload,Plus} from 'element-plus'
 import { useStore } from 'vuex'
 import {useRouter} from "vue-router"
 import CHAT from "../../client"
 export default {
     components:{
-        Plus
+        Plus,
+        ElUpload
     },
     setup(){
         const dialogImageUrl=ref('')
@@ -76,7 +76,7 @@ export default {
             if(textValue.value.length===0&&fileList.length===0){
                 ElMessage.warning("内容不能为空")
             }
-          let ImageUrl=[];
+           let ImageUrl=[];
            if(fileList.length>0){
                for(let i in fileList){
                    ImageUrl.push(fileList[i].url);

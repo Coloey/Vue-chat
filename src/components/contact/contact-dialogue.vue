@@ -17,13 +17,15 @@
       </div>
     </header>
     <div class="dialogue-section clearfix">
-      <div  v-for="(item, index) in msg"
+      <div v-for="(item, index) in msg"
         :key="index"  >
          <li 
         class="self clearfix"
         v-show="item.toUser==$route.query.username&&item.fromUser==$store.state.userInfo.username"     
       >     
-        <p class="text"  v-more>{{ item.text }}</p>
+        <p class="text"  v-more>{{ item.text }}
+        <img :src=item.imageUrl alt="" >
+        </p>
         <div class="header"><img :src="$store.state.userInfo.user_pic"  /></div>      
       </li>
        <li 
@@ -32,7 +34,10 @@
       >
          <!-- 获取当前聊天的人的头像 -->
         <div class="header"><img :src="otherpic.headerUrl" /></div>
-         <p class="text"  v-more>{{ item.text }}</p>
+         <p class="text"  v-more>
+          {{ item.text }}
+           <img :src=item.imageUrl alt="">
+          </p>     
       </li>
       </div>
       <span class="msg-more" id="msg-more">
@@ -74,9 +79,19 @@
             @focus="focusIpt"
             @blur="blurIpt"
           />
+          <el-dialog v-model="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="Preview Image" />
+          </el-dialog>
+           
         </div>              
-        <span class="expression iconfont icon-dialogue-smile" @click.stop="emojiShow"></span>
-        <span class="more iconfont" 
+        <span class="expression iconfont icon-dialogue-smile" @click.stop="emojiShow"></span>    
+        <label class="iconfont icon-dialogue-jia" for="image_uploads"></label>
+        <input type="file" id="image_uploads" name="image_uploads" 
+        @change="uploadFiles"
+        accept=".jpg, .jpeg, .png" multiple
+        style="display:none">
+        
+       <span class="more iconfont" 
         style="font-size: 15px;
               background: #aa96da;
               padding: 0px 5px;
@@ -124,9 +139,9 @@ import  contact from "../../store/contacts"
 import CHAT from "../../client"
 import debounce from "../../utils/debounce"
 import emotion from './emotion.vue';
-
+//import { ElUpload} from "element-plus";
 export default {
-  components: { emotion },
+  components: { emotion},
   name: "contact-dialogue",
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -137,41 +152,56 @@ export default {
   setup() {
     const route = useRoute();
     const store=useStore();
-    let currentChatWay = ref(true); //true为键盘打字,false为语音输入
+    //true为键盘打字,false为语音输入
+    let currentChatWay = ref(true); 
     let timer = ref(null);
     let InpVal=ref("");
+    //表情包子组件
     const emojihowVisible=ref(false)
     const emojiShow=()=>{
       emojihowVisible.value=!emojihowVisible.value
     }
     const chooseEmojiDefault=(e)=>{
       //console.log(e)
-        InpVal.value+=e;
+        InpVal.value=e;
     }
+   
     const msg=computed(()=>{return store.state.msg});
     const msgInfo =computed(()=>{
       return contact.getUserInfo(route.query.id)
     })
-    let pageName = ref(msgInfo.value.nickname);
     const msgInfo2=computed(()=>{
-      return encodeURIComponent(JSON.stringify(msgInfo.value))//对象作为路由参数时需要先转化为JSON格式的数据
+      //对象作为路由参数时需要先转化为JSON格式的数据
+      return encodeURIComponent(JSON.stringify(msgInfo.value))
      })
+    let pageName = ref(msgInfo.value.nickname);
+    //发送方图片
+    const imageUrl = ref("")
+    const uploadFiles=(e)=>{
+      let executeFile = e.target.files[0]     
+      imageUrl.value = URL.createObjectURL(executeFile)
+      console.log(imageUrl.value)
+    }
+    
+    //对方头像
     const otherpic=computed(()=>{
       return contact.getUserInfo(route.query.id)
     })
-   
+    
     onMounted(()=>{
       CHAT.message(store.state.userInfo.username)
     })
     const submit=debounce(()=>{
      
       var date=new Date().toLocaleString();  
+      console.log(imageUrl.value)
       //console.log(route.query.id)       
       const obj={
         date:date,
         text:InpVal.value,
         fromUser:store.state.userInfo.username,
         toUser:route.query.username,
+        imageUrl:imageUrl.value
       }
       
       InpVal.value="";
@@ -186,6 +216,7 @@ export default {
     const blurIpt=()=>{
         clearInterval(timer);
     }
+
     return {
         pageName,
         currentChatWay,
@@ -199,7 +230,9 @@ export default {
         msgInfo2,
         chooseEmojiDefault,
         emojiShow,
-        emojihowVisible
+        emojihowVisible,
+        uploadFiles
+       
     }
   },
   directives:{

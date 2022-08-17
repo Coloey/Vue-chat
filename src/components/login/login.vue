@@ -1,11 +1,11 @@
 <template>
-  <el-card shadow="always" class="login">
+  <div class="body">
+  <div  class="login">
     <div class="my-login">
       <div class="card-header">
           <span>登录</span>
       </div>
       <el-form
-  
         :model="userForm"
       >
         <el-form-item prop="account">
@@ -14,8 +14,7 @@
             <input
               class="my-input"
               placeholder="用户名"
-              v-model="userForm.username"
-             
+              v-model="userForm.username"             
             />
           </div>
         </el-form-item>
@@ -26,15 +25,14 @@
             <input
               class="my-input"
               placeholder="密码"
-              type="password"
               v-model="userForm.password"
               ref="password"
+              :type="passwordType"
             />
             <img
               src="../../assets/images/eyesopen.png"
               id="eyes-img"
               v-show="!visible"
-              ref="eyes"
               @click="show()"
             />
             <img
@@ -57,59 +55,62 @@
         </el-from-item>
       </el-form>
     </div>
-  </el-card>
+    </div>
+  </div>
 </template>
 
 <script>
 import {login,getUserInfo} from "../../utils/api"
+import {ElForm,ElFormItem,ElButton} from "element-plus"
+import {ref,reactive} from "vue"
+import { useRouter } from "vue-router"
 import CHAT from "../../client"
+import { useStore } from 'vuex'
 export default {
   name: "登录",
-  data() {
-    return {
-      logining:true,
-      userForm:{
-        username: "",
-        password: "",
+  components:{
+    ElForm,ElFormItem,ElButton
+  },
+  setup(){
+    const userForm = reactive({
+      username:'',
+      password:'',
+    })
+    const checked = ref(true)
+    const visible = ref(true)
+    const passwordType = ref ("password")
+    const router =useRouter()
+    const store =useStore()
+    function handleLogin(){
+       login({username:userForm.username,password:userForm.password}).then(()=>{
+          router.push({path:'/'});
+          getUserInfo().then(()=>{
+            CHAT.init(store.state.userInfo.username);//使用户初始化服务器
+          })
 
-      },       
-      checked: true,
-      visible: true,
-    };
-  },
-  methods: {
-    handleLogin() {
-      login({username:this.userForm.username,password:this.userForm.password}).then(()=>{
-        this.$router.push({path:'/'});
-         //登录成功后获取用户信息
-        getUserInfo().then(()=>{
-          //console.log(res.data.data.id)
-          CHAT.init(this.$store.state.userInfo.username);//使用户初始化服务器
-        
-        })
-        
-      })       
-    },
-    show() {
-      if (this.visible) {
-        this.$refs.password.setAttribute("type", "text");
-      } else {
-        this.$refs.password.setAttribute("type", "password");
+       })
+    }
+    const show=()=>{
+      if(visible.value){
+        passwordType.value="text"
+      }else {
+        passwordType.value = "password"
       }
-      this.visible = !this.visible;
-    },
+      visible.value =!visible.value
+    }
+    return {
+      userForm,
+      checked,
+      passwordType,
+      handleLogin,
+      show,
+      visible,
+    }
   },
+  
 };
 </script>
 
 <style lang="less">
-:root {
-  --el-color-primary: #409eff;
-  --el-color-success: #67c23a;
-  --el-color-warning: #e6a23c;
-  --el-color-danger: #f56c6c;
-  --el-color-error: #f56c6c;
-  --el-color-info: #909399;
-}
 @import "../../assets/less/login.less";
 </style>
