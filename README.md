@@ -3,15 +3,15 @@
 
 ## 概述
 
-项目结果：仿照微信的校园版微信
+#### 项目结果：仿照微信的校园版微信
 
  技术栈：Vue3,Vuex,Vue-Router,Element-plus,socket.io，express,mysql
 
 用node中的express搭建服务器,写接口，登录方式采用jwt登录验证，用mysql存储各个人员信息,用soket.io实现聊天功能，webpack打包项目，以及动态展示功能,支持修改密码，注册用户，一对一实时聊天，发表情包等功能，各个页面之间的跳转用vue-router实现，跳转使用路由懒加载，只会在第一次进入页面时才会获取这个函数，然后使用缓存数据。搭配使用Weui样式库。
 
-项目难点：
+#### 项目难点：
 
-1 实现实时聊天，socket.io的主要靠emit()和on()实现实时聊天，关键在于设计对话的数据结构，对话用一个对象保存，里面包含发送者姓名，接收者姓名，信息，将对话展示在对话页面中主要靠fromUser,toUser识别，我方对话：fromUser===username&&toUser===$router.query.name,对方对话：fromUser===$router.query.name&&toUser==username
+1 实现实时聊天，socket.io的主要靠emit()和on()实现实时聊天，关键在于设计对话的数据结构，对话用一个对象保存，里面包含发送者姓名，接收者姓名，信息，将对话展示在对话页面中主要靠fromUser,toUser识别
 
 服务端用一个onLineUsers对象存储登录的用户socket对象，属性为username，这样用onLineUsers[username]就可以获得不同的socket对象，进而实现触发与接收事件
 
@@ -28,10 +28,14 @@
 (3)设置响应拦截器。hideLoading,根据响应码去判断响应成功还是失败，响应成功执行一系列操作，比如存储用户信息和token等，再Promise.resolve()失败则显示相应失败原因，再Promise.reject()
 
 (4)封装相关api,注意如果是POST请求，需要用qs对请求体参数进行序列化
+#### 项目优化：
+1. 路由懒加载按需加载路由页面
+2. element-plus按需引用，减小打包体积
+3. webpack配置UglifyPlugin Webpack Plugin 插件用来缩小js文件
 
 ### 预览地址
 
-[]: https://coloey.github.io/Vue-chat/
+https://coloey.github.io/Vue-chat/
 
 ## Project setup
 
