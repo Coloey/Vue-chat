@@ -8,6 +8,8 @@
  技术栈：Vue3,Vuex,Vue-Router,Element-plus,socket.io，express,mysql
 
 用node中的express搭建服务器,写接口，登录方式采用jwt登录验证，用mysql存储各个人员信息,用soket.io实现聊天功能，webpack打包项目，以及动态展示功能,支持修改密码，注册用户，一对一实时聊天，发表情包等功能，各个页面之间的跳转用vue-router实现，跳转使用路由懒加载，只会在第一次进入页面时才会获取这个函数，然后使用缓存数据。搭配使用Weui样式库。
+测试账号：Coloey Xq123456
+          ZhangSan Zs123456
 
 #### 项目难点：
 
