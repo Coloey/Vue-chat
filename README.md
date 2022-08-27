@@ -68,7 +68,7 @@ npm run server
 ```js
 cd Server
 
-npm run app.js
+node app.js
 ```
 
 ### Compiles and minifies for production
