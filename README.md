@@ -1,9 +1,8 @@
-#                                   vue-Chat
-
+#                                   								vue-Chat
 
 ## 🎯简介
 
-一款仿照微信的聊天室
+一款仿照微信的聊天
 
 ## ✨Features
 
@@ -34,26 +33,28 @@
 - mysql
 
 ## 🎉项目优化：
-
 1. 路由懒加载按需加载路由页面
 2. element-plus按需引用，减小打包体积
 3. webpack配置UglifyPlugin Webpack Plugin 插件用来缩小js文件
 
 ## 👀预览地址
 
- https://coloey.github.io/Vue-chat/
+https://coloey.github.io/Vue-chat/
 
+## ✏测试账号：
 
+Coloey Xq123456
+ZhangSan Zs123456
 
 ## 📚使用指南
 
-```
+```js
 npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-npm run serve
+```js
+npm run server
 ```
 
 ### Run Server
@@ -66,15 +67,13 @@ npm run app.js
 
 ### Compiles and minifies for production
 
-```
+```js
 npm run build
 ```
 
 ### Lints and fixes files
-```
+```js
 npm run lint
 ```
-
-
 
 ### 🤗有用的话欢迎给个star⭐哦

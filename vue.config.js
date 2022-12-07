@@ -13,8 +13,13 @@ module.exports = {
     // webpack配置
     // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     chainWebpack: () => {},
+  
     configureWebpack:{
       plugins:[
+        require('unplugin-element-plus/webpack')({
+
+        }),
+          //代码压缩
         new UglifyJsPlugin({
           uglifyOptions:{
             compress:{
@@ -33,20 +38,8 @@ module.exports = {
     // vueLoader: {},
     // 生产环境是否生成 sourceMap 文件
     productionSourceMap: true,
-    // css相关配置
-    // css: {
-    //  // 是否使用css分离插件 ExtractTextPlugin
-    //  extract: true,
-    //  // 开启 CSS source maps?
-    //  sourceMap: false,
-    //  // css预设器配置项
-    //  loaderOptions: {},
-    //  // 启用 CSS modules for all css / pre-processor files.
-    //  requireModuleExtension: false
-    // },
-    // use thread-loader for babel & TS in production build
-    // enabled by default if the machine has more than 1 cores
-    parallel: require('os').cpus().length > 1,
+   
+    parallel: require('os').cpus().length > 1,// 是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建。
     // 是否启用dll
     // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#dll-mode
     // dll: false,

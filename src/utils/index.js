@@ -79,22 +79,6 @@ instance.interceptors.response.use((response)=>{
             }
         } 
         stragtegy[status]&&stragtegy[status](response)
-        /*switch(status){
-            case 0: //响应成功后如果是登录成功有token把token存储在本地
-                if(response.data.token!=undefined)window.localStorage.setItem('token',response.data.token);
-                break;
-            case 200://获取用户信息成功后存储在localStorage里和store
-                //console.log(response.data);
-                store.commit("saveUserInfo",(response.data).data);
-                window.localStorage.setItem('userInfo',JSON.stringify((response.data).data));
-                break;
-            case 401://登录过期跳转到登录页面
-            case 201://退出登录清空token跳转登录页面                
-                window.localStorage.removeItem('token');
-                window.localStorage.removeItem('userInfo')
-                CHAT.logout();
-                router.push("/login");  
-        }*/
         if(response.data.message)ElMessage.success(response.data.message)           
         return Promise.resolve(response); 
     }

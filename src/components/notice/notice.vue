@@ -26,17 +26,13 @@
 import CHAT from "../../client"
 import {onMounted} from "vue"
 import {useStore} from "vuex"
-export default {
-  
-    
+export default { 
     setup(){
         const store=useStore();
         onMounted(()=>{
              CHAT.post(store.state.userInfo.username)
-        })
-       
+        })      
     }
-
 }
 </script>
 

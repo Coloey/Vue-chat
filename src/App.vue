@@ -95,13 +95,7 @@ export default {
 };
 </script>
 <style lang="less">
-/*.hideLeft {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-    transition: 1.0s;
-    overflow: hidden;
-}*/
-/*将公用的样式统一在此导入*/
+
 
 @import "assets/css/base.css";
 @import "assets/css/common.css";

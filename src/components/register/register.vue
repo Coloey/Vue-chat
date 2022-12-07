@@ -1,11 +1,11 @@
 <template>
-<el-card shadow="always" class="login">
-    <div class="my-login">
+<div class="body">
+  <div class="login">
+     <div class="my-login">
       <div class="card-header">
-          <span>注册</span>
+          <span>注册<span>
       </div>
-      <el-form
-        
+      <el-form       
         :model="userForm"
       >
         <el-form-item prop="account">
@@ -52,7 +52,9 @@
         </el-form-item>
       </el-form>
     </div>
-  </el-card>
+  </div>
+   
+</div>
   
 </template>
 
@@ -90,7 +92,7 @@ export default {
     }
     
 
-    
+   
 }
 </script>
 
