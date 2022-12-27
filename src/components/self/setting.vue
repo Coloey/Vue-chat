@@ -56,12 +56,11 @@
 
 <script>
 import {logout} from "../../utils/api"
+//import CHAT from "../../client.js"
 export default {
   setup(){
       const confirmEvent=()=>{
-           logout().then(()=>{
-
-           })
+           logout()
       }
       return {
           confirmEvent

@@ -3,7 +3,7 @@
   <div class="login">
      <div class="my-login">
       <div class="card-header">
-          <span>注册<span>
+          <span>注册</span>
       </div>
       <el-form       
         :model="userForm"
@@ -52,47 +52,48 @@
         </el-form-item>
       </el-form>
     </div>
-  </div>
-   
+  </div> 
 </div>
-  
 </template>
 
 <script>
 import {register} from "../../utils/api"
+import {reactive,ref} from 'vue'
 export default {
     name:"注册",
-    data(){
-        return{
-            userForm:{
-                username:"",
-                password:""
-            },
-            checked:true,
-            visible:true,
-        }
-    },
-    methods:{
-        handleRegister(){
-            register(this.userForm).then((res)=>{
+    setup(){
+      const userForm = reactive({
+        username:'',
+        password:'',
+      })
+      const passwordType = ref ("password")
+      const visible=ref(true)
+      const checked=ref(true)
+      const handleRegister=()=>{
+            register(userForm).then((res)=>{
                 console.log(res)
                 this.$router.replace({path:'/login'})
             })
-        },
-         show() {
-            if (this.visible) {
-                this.$refs.password.setAttribute("type", "text");
-            } else {
-                this.$refs.password.setAttribute("type", "password");
-            }
-            this.visible = !this.visible;
-        },
-
-
+      }
+      const show=()=>{
+          if(visible.value){
+            passwordType.value="text"
+          }else {
+            passwordType.value = "password"
+          }
+          visible.value =!visible.value
+      }
+      return {
+        userForm,
+        passwordType,
+        show,
+        checked,
+        visible,
+        handleRegister
+      }
     }
-    
 
-   
+  
 }
 </script>
 

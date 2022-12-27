@@ -23,8 +23,9 @@
         class="self clearfix"
         v-show="item.toUser==$route.query.username&&item.fromUser==$store.state.userInfo.username"     
       >     
-        <p class="text"  v-more>{{ item.text }}
-        <img :src=item.imageUrl alt="" >
+        <p class="text"  v-more>
+          {{ item.text }}
+        <img :src=item.imageUrl alt="" v-show="item.imageUrl"/>
         </p>
         <div class="header"><img :src="$store.state.userInfo.user_pic"  /></div>      
       </li>
@@ -36,7 +37,7 @@
         <div class="header"><img :src="otherpic.headerUrl" /></div>
          <p class="text"  v-more>
           {{ item.text }}
-           <img :src=item.imageUrl alt="">
+           <img :src=item.imageUrl alt="" v-show="item.imageUrl"/>
           </p>     
       </li>
       </div>
@@ -134,7 +135,7 @@
 <script>
 import { useRoute } from "vue-router";
 import {useStore} from "vuex";
-import { onMounted,  computed,  ref } from "vue";
+import { onMounted,  computed,  ref, onUnmounted, nextTick } from "vue";
 import  contact from "../../store/contacts"
 import CHAT from "../../client"
 import debounce from "../../utils/debounce"
@@ -148,7 +149,7 @@ export default {
       vm.$store.commit("setPageName", vm.$route.query.name);
     });
   },
-
+  
   setup() {
     const route = useRoute();
     const store=useStore();
@@ -162,11 +163,13 @@ export default {
       emojihowVisible.value=!emojihowVisible.value
     }
     const chooseEmojiDefault=(e)=>{
-      //console.log(e)
         InpVal.value=e;
     }
    
-    const msg=computed(()=>{return store.state.msg});
+    const msg=computed(()=>{
+      console.log(store.state.msg)
+      return store.state.msg
+    });
     const msgInfo =computed(()=>{
       return contact.getUserInfo(route.query.id)
     })
@@ -187,15 +190,24 @@ export default {
     const otherpic=computed(()=>{
       return contact.getUserInfo(route.query.id)
     })
-    
+    const handler = () => {      
+      const username = JSON.parse(window.localStorage.getItem("userInfo")).username
+      console.log('刷新',username)
+      if(username){
+        nextTick(()=>{
+          CHAT.init(username,true)
+        })
+      }
+    }
     onMounted(()=>{
-      CHAT.message(store.state.userInfo.username)
+       window.addEventListener('load',handler)
+       CHAT.message(store.state.userInfo.username)
     })
-    const submit=debounce(()=>{
-     
-      var date=new Date().toLocaleString();  
-      console.log(imageUrl.value)
-      //console.log(route.query.id)       
+    onUnmounted(()=>{
+      window.removeEventListener('load',handler)
+    })
+    const submit=debounce(()=>{     
+      var date=new Date().toLocaleString();       
       const obj={
         date:date,
         text:InpVal.value,

@@ -41,6 +41,7 @@ import mixin from "./store/mixin";
 import { useRoute,useRouter } from 'vue-router';
 import {ref,watch,onMounted} from 'vue'
 import {useStore} from 'vuex'
+
 window.mixin=mixin
 export default {
    name: 'app',
@@ -58,8 +59,10 @@ export default {
             const leaveAnimate=ref("")  //页面离开动效
             const route=useRoute()
             const store=useStore()
-             const router = useRouter()
+            const router = useRouter()
+             
              onMounted(()=>{
+              //没有登录 跳转到登录页面
                if(window.localStorage.getItem('token')==undefined){
                  router.push("/login")
                }
