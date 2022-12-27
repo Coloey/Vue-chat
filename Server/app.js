@@ -76,11 +76,6 @@ io.on("connection", function (socket) {
     date = obj.date;
     if (toUser in onlineUsers) {
       //接收方
-      console.log(
-        `${fromUser + onlineUsers[fromUser].id},${
-          toUser + onlineUsers[toUser].id
-        }, ${obj}`
-      );
       onlineUsers[toUser].emit(toUser, obj); //两边都显示信息
       onlineUsers[fromUser].emit(fromUser, obj);
     } else {
