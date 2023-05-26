@@ -50,7 +50,7 @@ const io = require("socket.io")(server, {
   //服务端配置cors
   cors: {
     origin: "https://coloey.github.io",
-    //origin: "http://localhost:8081",
+    // origin: "http://localhost:8081",
   },
 });
 let onlineUsers = {}; //存储在线用户的对象
@@ -78,15 +78,15 @@ io.on("connection", function (socket) {
       //接收方
       onlineUsers[toUser].emit(toUser, obj); //两边都显示信息
       onlineUsers[fromUser].emit(fromUser, obj);
-    } else {
+    } else if (fromUser in onlineUsers) {
       onlineUsers[fromUser].emit(fromUser, obj);
       console.log(toUser + "不在线");
     }
   });
   socket.on("sendPost", (obj) => {
-    console.log(obj);
+    // console.log(obj);
     for (let username in onlineUsers) {
-      console.log(username);
+      // console.log(username);
       onlineUsers[username].emit("post" + username, obj);
     }
   });

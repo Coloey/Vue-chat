@@ -124,12 +124,6 @@ q:after {
     content: ' ';
     content: none;
 }
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 body {
     font: 13px/1.5 Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, WenQuanYi Micro Hei, Arial, sans-serif;
 }
@@ -184,17 +178,6 @@ input {
 
 .clearfix {
     zoom: 1;
-}
-
-table {
-    margin-left: 1px;
-}
-
-table td,
-table th {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
 }
 
 a {
